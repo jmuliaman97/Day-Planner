@@ -7,7 +7,7 @@ $(document).ready(function () {
   let currentHour = moment().hours()
   let savedHours = []
   let savedText = []
-  
+
   // do a function for the total hours
   function totalHours() {
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
       // since the row values are the same, use attr to grab first 'id' element
       let hourElem = $(this).attr('id')
       // find out what 'this' is by console logging
-      console.log(this)
+      // console.log(this)
       // remove 'hour-' from the 'id' by using slice() and it does the same throughout the entire length of the element 
       let dayHours = hourElem.slice(5, hourElem.length)
       // use parseInt() to parse string and return it as an integer
@@ -58,6 +58,8 @@ $(document).ready(function () {
   // make a function to save the text
   function saveText() {
     let plans = document.querySelector('.description').value
+    console.log(plans);
+
     // check browser support
     if (typeof Storage !== 'undefined') {
       // store saved text to local storage
@@ -65,5 +67,5 @@ $(document).ready(function () {
     }
     savedHour()
   }
-  
+
 })

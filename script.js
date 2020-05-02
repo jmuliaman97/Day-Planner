@@ -7,7 +7,7 @@ $(document).ready(function () {
   let currentHour = moment().hours()
   let savedHours = []
   let savedText = []
-  
+
   // do a function for the total hours
   function totalHours() {
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
       // since the row values are the same, use attr to grab first 'id' element
       let hourElem = $(this).attr('id')
       // find out what 'this' is by console logging
-      console.log(this)
+      // console.log(this)
       // remove 'hour-' from the 'id' by using slice() and it does the same throughout the entire length of the element 
       let dayHours = hourElem.slice(5, hourElem.length)
       // use parseInt() to parse string and return it as an integer
@@ -46,24 +46,29 @@ $(document).ready(function () {
   }
   totalHours()
 
-  // make a function to save the hour
-  function savedHour() {
-    // check browser support
-    if (typeof Storage !== 'undefined') {
-      // store saved hours to local storage
-      localStorage.setItem('savedHours', currentHour)
-    }
-  }
+  // grab container and do an add event listener so when the save button is clicked it saves the text
+  $('.container').on('click', '.saveBtn', function () {
+    // make a variable to save the text so when we write in the text area it corresponds to 'this' specific save button
+    let textToSave = $('.textArea' + $(this).attr('id')).val()
+    console.log(textToSave)
+    // save it to the local storage
+    localStorage.setItem('toDo' + $(this).attr('id'), JSON.stringify(textToSave))
+  })
 
-  // make a function to save the text
-  function saveText() {
-    let plans = document.querySelector('.description').value
-    // check browser support
-    if (typeof Storage !== 'undefined') {
-      // store saved text to local storage
-      localStorage.setItem('savedText', plans)
+  // write a function to return it from the local storage
+  function returnFromLocalStorage() {
+    // make a for loop since there are 8 different hours
+    for (let i = 0; i < 9; i++) {
+      // get item from local storage
+      let todoFromLocal = JSON.parse(localStorage.getItem('toDo' + i))
+
+      // if to do doesn't equal to 0, input the text from the local storage
+      if(todoFromLocal !== null){
+        $('.textArea'+i).text(todoFromLocal)
+      }
+
     }
-    savedHour()
   }
-  
+  returnFromLocalStorage()
+
 })
